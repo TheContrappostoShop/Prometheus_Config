@@ -4,7 +4,7 @@ and NanoDLP together on the Prometheus MSLA printer, as well as a companion
 installation script to get everything set up.
 
 > :warning: **These files, and the included installation script, are a work in 
-progress. Exercise caution when using them for the first time.
+progress. Exercise caution when using them for the first time.**
 
 ## Instructions
 Ensure you have git installed on your desired host machine, and execute the
