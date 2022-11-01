@@ -5,7 +5,7 @@
 set -e
 
 SOURCE_DIR="$(dirname -- "$(readlink -f "${BASH_SOURCE[0]}")")"
-INSTALL_DIR = "$(getent passwd ${SUDO_USER:-$USER} | cut -d: -f6)"
+INSTALL_DIR="$(getent passwd ${SUDO_USER:-$USER} | cut -d: -f6)"
 
 mkdir -p ${INSTALL_DIR}/printer_data/config
 mkdir -p ${INSTALL_DIR}/nanodlp
