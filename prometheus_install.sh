@@ -52,7 +52,7 @@ else
 fi
 
 echo "Setting up NanoDLP service (may require SUDO)..."
-sudo cp ${SOURCE_DIR}/service/nanodlp.service /etc/systemd/system/
+sudo scripts/generate_nanodlp_service.sh
 sudo systemctl daemon-reload
 sudo systemctl enable nanodlp.service
 
