@@ -21,7 +21,6 @@ cp ${SOURCE_DIR}/service/nanodlp.service /etc/systemd/system/
 # TODO: Ensure script is run with sudo, else this will fail
 systemctl daemon-reload
 systemctl enable nanodlp.service
-systemctl start nanodlp.service
 
 if [ ! -d "${HOME}/kiauh" ] ; then
     git clone https://github.com/th33xitus/kiauh.git ${HOME}/kiauh
@@ -30,3 +29,7 @@ else
 fi
 
 cp ${SOURCE_DIR}/klipper_repos.txt ${HOME}/kiauh/
+
+./${HOME}/kiauh/kiauh.sh
+
+systemctl start nanodlp.service
