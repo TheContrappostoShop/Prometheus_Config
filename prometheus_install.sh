@@ -19,7 +19,7 @@ else
     echo "NanoDLP already detected--re-install?"
     select yn in "Yes" "No"; do
         case $yn in
-            Yes )     wget https://www.nanodlp.com/download/nanodlp.linux.arm64.stable.tar.gz -O - | tar -xz -C ${INSTALL_DIR}/nanodlp ;;
+            Yes ) wget https://www.nanodlp.com/download/nanodlp.linux.arm64.stable.tar.gz -O - | tar -xz -C ${INSTALL_DIR}/nanodlp; break;;
             No ) break;;
         esac
     done
