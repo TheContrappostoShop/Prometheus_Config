@@ -13,7 +13,17 @@ mkdir -p ${INSTALL_DIR}/nanodlp
 # TODO: Modify printer.cfg mcu location to match connected serial device
 cp -r ${SOURCE_DIR}/klipper_config/* ${INSTALL_DIR}/printer_data/config
 
-wget https://www.nanodlp.com/download/nanodlp.linux.arm64.stable.tar.gz -O - | tar -xz -C ${INSTALL_DIR}/nanodlp
+if [ ! -d "${INSTALL_DIR}/nanodlp" ] ; then
+    wget https://www.nanodlp.com/download/nanodlp.linux.arm64.stable.tar.gz -O - | tar -xz -C ${INSTALL_DIR}/nanodlp
+else
+    echo "NanoDLP already detected--re-install?"
+    select yn in "Yes" "No"; do
+        case $yn in
+            Yes )     wget https://www.nanodlp.com/download/nanodlp.linux.arm64.stable.tar.gz -O - | tar -xz -C ${INSTALL_DIR}/nanodlp ;;
+            No ) break;;
+        esac
+    done
+fi
 
 cp -r ${SOURCE_DIR}/nanodlp_db/* ${INSTALL_DIR}/nanodlp/db
 
