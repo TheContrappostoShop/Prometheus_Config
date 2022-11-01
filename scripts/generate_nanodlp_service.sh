@@ -5,9 +5,9 @@ Requires=klipper.service
 
 [Service]
 Type=simple
-ExecStart=${INSTALL_DIR}/nanodlp/run.sh
+ExecStart=$1/nanodlp/run.sh
 RemainAfterExit=yes
-WorkingDirectory=${INSTALL_DIR}/nanodlp
+WorkingDirectory=$1/nanodlp
 Restart=always
 RestartSec=10
 
