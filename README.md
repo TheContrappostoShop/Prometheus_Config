@@ -12,7 +12,7 @@ following commands to utilize our installations script:
 ```
 cd ~
 git clone https://github.com/TheContrappostoShop/Prometheus_Config.git
-sudo ./Prometheus_Config/prometheus_install.sh
+./Prometheus_Config/prometheus_install.sh
 ```
 
 Alternatively, you may simply clone the repository, and copy the files to their

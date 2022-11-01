@@ -17,11 +17,10 @@ wget https://www.nanodlp.com/download/nanodlp.linux.arm64.stable.tar.gz -O - | t
 
 cp -r ${SOURCE_DIR}/nanodlp_db/* ${INSTALL_DIR}/nanodlp/db
 
-cp ${SOURCE_DIR}/service/nanodlp.service /etc/systemd/system/
+sudo cp ${SOURCE_DIR}/service/nanodlp.service /etc/systemd/system/
 
-# TODO: Ensure script is run with sudo, else this will fail
-systemctl daemon-reload
-systemctl enable nanodlp.service
+sudo systemctl daemon-reload
+sudo systemctl enable nanodlp.service
 
 if [ ! -d "${INSTALL_DIR}/kiauh" ] ; then
     git clone https://github.com/th33xitus/kiauh.git ${INSTALL_DIR}/kiauh
@@ -33,4 +32,4 @@ cp ${SOURCE_DIR}/klipper_repos.txt ${INSTALL_DIR}/kiauh/
 
 ${INSTALL_DIR}/kiauh/kiauh.sh
 
-systemctl start nanodlp.service
+sudo systemctl start nanodlp.service
