@@ -56,13 +56,14 @@ sudo cp ${SOURCE_DIR}/service/nanodlp.service /etc/systemd/system/
 sudo systemctl daemon-reload
 sudo systemctl enable nanodlp.service
 
-echo "Cloning Klipper Install and Update Helper..."
+echo "Cloning Klipper Installation and Update Helper..."
 if [ ! -d "${INSTALL_DIR}/kiauh" ] ; then
     git clone https://github.com/th33xitus/kiauh.git ${INSTALL_DIR}/kiauh
 else
     git -C "${INSTALL_DIR}/kiauh" pull
 fi
 
+# TODO: Remove KIAUH, and actually just install Klipper and Mainsail ourselves
 cp ${SOURCE_DIR}/klipper_repos.txt ${INSTALL_DIR}/kiauh/
 
 ${INSTALL_DIR}/kiauh/kiauh.sh
