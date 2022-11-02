@@ -18,7 +18,7 @@ copy_klipper_config () {
 
 find_serial_device () {
     echo "Select the serial device to use for as your MCU (hit enter to leave blank)"
-    select serial in */dev/serial/by-id/*; do
+    select serial in */dev/serial/by-id/* ; do
         case $serial
             *) return ${serial:-""}; break;;
         ecas
