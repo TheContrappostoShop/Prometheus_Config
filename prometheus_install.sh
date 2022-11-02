@@ -26,7 +26,7 @@ copy_klipper_config () {
         echo "Select the serial device to use as your MCU (hit enter to leave blank [MUST BE ADDED FOR KLIPPER TO WORK])"
         SELECTED_SERIAL="$(find_serial_device)"
     fi
-    sed -i "s|SERIAL_DEVICE_LOCATION|${SELECTED_SERIAL:-""}|" klipper_config/printer.cfg
+    sed -i "s|SERIAL_DEVICE_LOCATION|${SELECTED_SERIAL:-""}|" ${INSTALL_DIR}/printer_data/config/printer.cfg
 }
 
 echo "Copying configuration files..."
