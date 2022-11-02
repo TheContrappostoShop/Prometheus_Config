@@ -12,8 +12,13 @@ following commands to utilize our installations script:
 ```
 cd ~
 git clone https://github.com/TheContrappostoShop/Prometheus_Config.git
-sudo ./Prometheus_Config/prometheus_install.sh
+./Prometheus_Config/prometheus_install.sh
 ```
+
+This script will install NanoDLP as well as all of the NanoDLP and Klipper 
+configuration files. The last step of the script will start the 
+[KIAUH](https://github.com/th33xitus/kiauh) Klipper installation script, which 
+you will use to install Klipper, Moonraker, and your preferred UI.
 
 Alternatively, you may simply clone the repository, and copy the files to their
 destinations manually. See below for a detailed listing of the included files

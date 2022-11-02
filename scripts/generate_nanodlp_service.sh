@@ -1,14 +1,17 @@
+#!/usr/bin/env bash
+echo """
 [Unit]
 Description=nanodlp service
 Requires=klipper.service
 
 [Service]
 Type=simple
-ExecStart=/home/ragwa/nanodlp/run.sh
+ExecStart=$1/nanodlp/run.sh
 RemainAfterExit=yes
-WorkingDirectory=/home/ragwa/nanodlp
+WorkingDirectory=$1/nanodlp
 Restart=always
 RestartSec=10
 
 [Install]
 WantedBy=multi-user.target
+""" > /etc/systemd/system/nanodlp.service
