@@ -10,20 +10,33 @@ INSTALL_DIR="$(getent passwd ${SUDO_USER:-$USER} | cut -d: -f6)"
 mkdir -p ${INSTALL_DIR}/printer_data/config
 mkdir -p ${INSTALL_DIR}/nanodlp
 
+copy_klipper_config () {
+    cp -r ${SOURCE_DIR}/klipper_config/* ${INSTALL_DIR}/printer_data/config
+
+    sed -i "s/SERIAL_DEVICE_LOCATION/${find_Serial_device}/" ${INSTALL_DIR}/printer_data/config/printer.cfg
+} 
+
+find_serial_device () {
+    echo "Select the serial device to use for as your MCU (hit enter to leave blank)"
+    select serial in */dev/serial/by-id/*; do
+        case $serial
+            *) return ${serial:-""}; break;;
+        ecas
+    done
+}
+
 echo "Copying configuration files..."
 if [ ! "$(ls -A ${INSTALL_DIR}/printer_data/config)" ]; then
-cp -r ${SOURCE_DIR}/klipper_config/* ${INSTALL_DIR}/printer_data/config
+    copy_klipper_config
 else
     echo "Klipper configuration files detected. Do you wish to overrite them?"
     select yn in "Yes" "No"; do
         case $yn in
-            Yes ) cp -r ${SOURCE_DIR}/klipper_config/* ${INSTALL_DIR}/printer_data/config; break;;
+            Yes ) copy_klipper_config; break;;
             No ) break;;
         esac
     done
 fi
-
-cp -r ${SOURCE_DIR}/klipper_config/* ${INSTALL_DIR}/printer_data/config
 
 echo "Installing NanoDLP..."
 if [ ! -d "${INSTALL_DIR}/nanodlp" ] ; then
