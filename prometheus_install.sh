@@ -10,19 +10,22 @@ INSTALL_DIR="$(getent passwd ${SUDO_USER:-$USER} | cut -d: -f6)"
 mkdir -p ${INSTALL_DIR}/printer_data/config
 mkdir -p ${INSTALL_DIR}/nanodlp
 
-copy_klipper_config () {
-    cp -r ${SOURCE_DIR}/klipper_config/* ${INSTALL_DIR}/printer_data/config
-
-    sed -i "s/SERIAL_DEVICE_LOCATION/${find_Serial_device}/" ${INSTALL_DIR}/printer_data/config/printer.cfg
-} 
 
 find_serial_device () {
     echo "Select the serial device to use for as your MCU (hit enter to leave blank)"
     select serial in */dev/serial/by-id/* ; do
-        case $serial
+        case $serial in
             *) return ${serial:-""}; break;;
-        ecas
+        esac
     done
+}
+
+copy_klipper_config () {
+    cp -r ${SOURCE_DIR}/klipper_config/* ${INSTALL_DIR}/printer_data/config
+
+    SEL
+
+    sed -i "s/SERIAL_DEVICE_LOCATION/${find_serial_device}/" ${INSTALL_DIR}/printer_data/config/printer.cfg
 }
 
 echo "Copying configuration files..."
