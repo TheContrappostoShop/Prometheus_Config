@@ -12,10 +12,9 @@ mkdir -p ${INSTALL_DIR}/nanodlp
 
 
 find_serial_device () {
-    echo "Select the serial device to use for as your MCU (hit enter to leave blank)"
-    select serial in */dev/serial/by-id/* ; do
+    select serial in /dev/serial/by-id/* ; do
         case $serial in
-            *) return ${serial:-""}; break;;
+            *) echo "${serial:-""}"; break;;
         esac
     done
 }
@@ -23,9 +22,11 @@ find_serial_device () {
 copy_klipper_config () {
     cp -r ${SOURCE_DIR}/klipper_config/* ${INSTALL_DIR}/printer_data/config
 
-    SEL
-
-    sed -i "s/SERIAL_DEVICE_LOCATION/${find_serial_device}/" ${INSTALL_DIR}/printer_data/config/printer.cfg
+    if [ -d "/dev/serial/by-id" ] && [ "$(ls -A /dev/serial/by-id)" ]; then
+        echo "Select the serial device to use as your MCU (hit enter to leave blank [MUST BE ADDED FOR KLIPPER TO WORK])"
+        SELECTED_SERIAL="$(find_serial_device)"
+    fi
+    sed -i "s|SERIAL_DEVICE_LOCATION|${SELECTED_SERIAL:-""}|" klipper_config/printer.cfg
 }
 
 echo "Copying configuration files..."
