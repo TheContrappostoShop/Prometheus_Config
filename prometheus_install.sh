@@ -101,11 +101,9 @@ echo "the Klipper repository to use The Contrapposto Shop's custom modifications
 echo "Would you like to run that now?"
 select yn in "Yes" "No"; do
     case $yn in
-        Yes ) setup_nanodlp_service; break;;
+        Yes ) ${INSTALL_DIR}/kiauh/kiauh.sh; break;;
         No ) break;;
     esac
 done
-
-${INSTALL_DIR}/kiauh/kiauh.sh
 
 sudo systemctl start nanodlp.service
