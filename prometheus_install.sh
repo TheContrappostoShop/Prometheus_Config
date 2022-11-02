@@ -23,7 +23,7 @@ copy_klipper_config () {
     cp -r ${SOURCE_DIR}/klipper_config/* ${INSTALL_DIR}/printer_data/config
 
     if [ -d "/dev/serial/by-id" ] && [ "$(ls -A /dev/serial/by-id)" ]; then
-        echo "Select the serial device to use as your MCU (hit enter to leave blank [MUST BE ADDED FOR KLIPPER TO WORK])"
+        echo "Select the serial device to use as your MCU (hit enter to leave blank for now [MUST BE ADDED FOR KLIPPER TO WORK])"
         SELECTED_SERIAL="$(find_serial_device)"
     fi
     sed -i "s|SERIAL_DEVICE_LOCATION|${SELECTED_SERIAL:-""}|" ${INSTALL_DIR}/printer_data/config/printer.cfg

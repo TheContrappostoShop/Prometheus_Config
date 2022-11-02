@@ -13,4 +13,4 @@ RestartSec=10
 
 [Install]
 WantedBy=multi-user.target
-""" >> /etc/system/systemd/nanodlp.service
+""" >> /etc/systemd/system/nanodlp.service
