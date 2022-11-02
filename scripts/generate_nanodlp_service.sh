@@ -1,3 +1,4 @@
+#!/usr/bin bash
 echo """
 [Unit]
 Description=nanodlp service
