@@ -11,22 +11,8 @@ mkdir -p ${INSTALL_DIR}/printer_data/config
 mkdir -p ${INSTALL_DIR}/nanodlp
 
 
-find_serial_device () {
-    select serial in /dev/serial/by-id/* ; do
-        case $serial in
-            *) echo "${serial:-""}"; break;;
-        esac
-    done
-}
-
 copy_klipper_config () {
     cp -r ${SOURCE_DIR}/klipper_config/* ${INSTALL_DIR}/printer_data/config
-
-    if [ -d "/dev/serial/by-id" ] && [ "$(ls -A /dev/serial/by-id)" ]; then
-        echo "Select the serial device to use as your MCU (hit enter to leave blank for now [MUST BE ADDED FOR KLIPPER TO WORK])"
-        SELECTED_SERIAL="$(find_serial_device)"
-    fi
-    sed -i "s|SERIAL_DEVICE_LOCATION|${SELECTED_SERIAL:-""}|" ${INSTALL_DIR}/printer_data/config/printer.cfg
 }
 
 setup_nanodlp_service () {
@@ -49,7 +35,7 @@ else
 fi
 
 echo "Installing NanoDLP..."
-if [ ! -d "${INSTALL_DIR}/nanodlp" ] ; then
+if [ ! -f "${INSTALL_DIR}/nanodlp/nanodlp" ] ; then
     wget https://www.nanodlp.com/download/nanodlp.linux.arm64.stable.tar.gz -O - | tar -xz -C ${INSTALL_DIR}/nanodlp
 else
     echo "NanoDLP already detected--re-install?"
@@ -94,6 +80,7 @@ if [ ! -d "${INSTALL_DIR}/kiauh" ] ; then
 else
     git -C "${INSTALL_DIR}/kiauh" pull
 fi
+cp ${SOURCE_DIR}/klipper_repos.txt ${INSTALL_DIR}/kiauh
 
 
 echo "You will need to use KIAUH to install Klipper and Moonraker, and change "
