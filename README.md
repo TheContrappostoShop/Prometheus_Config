@@ -24,7 +24,7 @@ files.
 To install the NanoDLP configuration, you will need to import it from 
 within NanoDLP. 
 
-First, go to the NanoDLP web UI, and select the "generic" distribution, to finish
+First, go to the NanoDLP web UI, and select the "NanoDLP" distribution, to finish
 setup--it should be the first option presented. After you select it, NanoDLP will
 restart, and you will need to refresh the page.
 
