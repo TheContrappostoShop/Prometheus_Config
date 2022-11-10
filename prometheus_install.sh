@@ -32,7 +32,7 @@ setup_nanodlp_service () {
 }
 
 setup_openocd_service() {
-    if [systemctl is-active --quiet board_reset.service] ; then
+    if [ systemctl is-active --quiet board_reset.service ] ; then
         sudo systemctl stop board_reset.service
     fi
     sudo ${SOURCE_DIR}/scripts/openocd_setup.sh ${INSTALL_DIR}
@@ -46,10 +46,10 @@ setup_openocd_service() {
 }
 
 stop_running_services() {
-    if [systemctl is-active --quiet klipper.service] ; then
+    if [ systemctl is-active --quiet klipper.service ] ; then
         sudo systemctl stop klipper.service
     fi
-    if [systemctl is-active --quiet nanodlp.service] ; then
+    if [ systemctl is-active --quiet nanodlp.service ] ; then
         sudo systemctl stop nanodlp.service
     fi
 }
