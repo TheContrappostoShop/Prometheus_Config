@@ -18,6 +18,8 @@ copy_klipper_config () {
 #ping http://localhost/printer/distro/generic to set distro??
 copy_nanodlp_config () {
     cp -r ${SOURCE_DIR}/nanodlp_db/* ${INSTALL_DIR}/nanodlp/db
+    cp -r ${SOURCE_DIR}/nanodlp_public/* ${INSTALL_DIR}/nanodlp/public
+    sudo echo "generic" > ${INSTALL_DIR}/nanodlp/build
 }
 
 setup_klipper_service () {
