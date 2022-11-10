@@ -15,11 +15,42 @@ copy_klipper_config () {
     cp -r ${SOURCE_DIR}/klipper_config/* ${INSTALL_DIR}/printer_data/config
 }
 
+setup_klipper_service () {
+    sudo ${SOURCE_DIR}/systemd/generate_klipper_env.sh ${INSTALL_DIR}
+    sudo ${SOURCE_DIR}/systemd/generate_klipper_service.sh ${INSTALL_DIR}
+    sudo systemctl daemon-reload
+    sudo systemctl enable klipper.service
+}
+
 setup_nanodlp_service () {
-    sudo ${SOURCE_DIR}/scripts/generate_nanodlp_service.sh ${INSTALL_DIR}
+    sudo ${SOURCE_DIR}/systemd/generate_nanodlp_service.sh ${INSTALL_DIR}
     sudo systemctl daemon-reload
     sudo systemctl enable nanodlp.service
 }
+
+setup_openocd_service() {
+    sudo ${SOURCE_DIR}/scripts/openocd_setup.sh ${INSTALL_DIR}
+    mkdir -p ${INSTALL_DIR}/printer_data/scripts
+    cp ${SOURCE_DIR}/scripts/openocd_board_reset.sh ${INSTALL_DIR}/printer_data/scripts
+
+    sudo ${SOURCE_DIR}/systemd/generate_reset_service.sh ${INSTALL_DIR}
+    sudo systemctl daemon-reload
+    sudo systemctl enable board_reset.service
+    sudo systemctl start board_reset.service
+    
+}
+
+echo "Ensuring git is up to date..."
+sudo apt install git -y
+
+
+echo "Installing/Updating Klipper..."
+if [ ! -d "${INSTALL_DIR}/klipper" ] ; then
+    git clone https://github.com/TheContrappostoShop/klipper.git ${INSTALL_DIR}/klipper
+else
+    git -C "${INSTALL_DIR}/klipper" pull
+fi
+
 
 echo "Copying configuration files..."
 if [ ! "$(ls -A ${INSTALL_DIR}/printer_data/config)" ]; then
@@ -29,6 +60,19 @@ else
     select yn in "Yes" "No"; do
         case $yn in
             Yes ) copy_klipper_config; break;;
+            No ) break;;
+        esac
+    done
+fi
+
+echo "Setting up Klipper service (may require SUDO)..."
+if [ ! -f "/etc/systemd/system/klipper.service" ] ; then
+    setup_klipper_service
+else
+    echo "NanoDLP service file detected. Do you wish to overrite it?"
+    select yn in "Yes" "No"; do
+        case $yn in
+            Yes ) setup_klipper_service; break;;
             No ) break;;
         esac
     done
@@ -73,24 +117,13 @@ else
     done
 fi
 
-# TODO: Remove KIAUH, and actually just install Klipper and Mainsail ourselves
-echo "Preparing Klipper Installation and Update Helper..."
-if [ ! -d "${INSTALL_DIR}/kiauh" ] ; then
-    git clone https://github.com/th33xitus/kiauh.git ${INSTALL_DIR}/kiauh
-else
-    git -C "${INSTALL_DIR}/kiauh" pull
-fi
-cp ${SOURCE_DIR}/klipper_repos.txt ${INSTALL_DIR}/kiauh
-
-
-echo "You will need to use KIAUH to install Klipper and Moonraker, and change "
-echo "the Klipper repository to use The Contrapposto Shop's custom modifications."
-echo "Would you like to run that now?"
+echo "Install OpenOCD and Prometheus Reset Service? (required for v3.5.1 boards)"
 select yn in "Yes" "No"; do
     case $yn in
-        Yes ) ${INSTALL_DIR}/kiauh/kiauh.sh; break;;
+        Yes ) setup_openocd_service; break;;
         No ) break;;
     esac
 done
 
+sudo systemctl start klipper.service
 sudo systemctl start nanodlp.service
