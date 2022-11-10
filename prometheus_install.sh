@@ -17,7 +17,6 @@ copy_klipper_config () {
 
 copy_nanodlp_config () {
     cp -r ${SOURCE_DIR}/nanodlp_db/* ${INSTALL_DIR}/nanodlp/db
-    echo "generic" > ${INSTALL_DIR}/nanodlp/build
 }
 
 setup_klipper_service () {
