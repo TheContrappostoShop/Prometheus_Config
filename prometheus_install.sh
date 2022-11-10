@@ -9,6 +9,8 @@ INSTALL_DIR="$(getent passwd ${SUDO_USER:-$USER} | cut -d: -f6)"
 
 mkdir -p ${INSTALL_DIR}/printer_data/config
 mkdir -p ${INSTALL_DIR}/printer_data/systemd
+mkdir -p ${INSTALL_DIR}/printer_data/logs
+mkdir -p ${INSTALL_DIR}/printer_data/comms
 mkdir -p ${INSTALL_DIR}/nanodlp
 
 
@@ -37,7 +39,7 @@ setup_openocd_service() {
     mkdir -p ${INSTALL_DIR}/printer_data/scripts
     cp ${SOURCE_DIR}/scripts/openocd_board_reset.sh ${INSTALL_DIR}/printer_data/scripts
 
-    sudo ${SOURCE_DIR}/systemd/generate_reset_service.sh ${INSTALL_DIR}
+    ${SOURCE_DIR}/systemd/generate_reset_service.sh ${INSTALL_DIR}
     sudo systemctl daemon-reload
     sudo systemctl enable board_reset.service
     sudo systemctl start board_reset.service
@@ -61,6 +63,7 @@ stop_running_services
 echo "Installing/Updating Klipper..."
 if [ ! -d "${INSTALL_DIR}/klipper" ] ; then
     git clone https://github.com/TheContrappostoShop/klipper.git ${INSTALL_DIR}/klipper
+    ${SOURCE_DIR}/systemd/klipper_setup.sh ${INSTALL_DIR}
 else
     git -C "${INSTALL_DIR}/klipper" pull
 fi
