@@ -18,4 +18,4 @@ EnvironmentFile=$1/printer_data/systemd/klipper.env
 ExecStart=$1/klippy-env/bin/python $KLIPPER_ARGS
 Restart=always
 RestartSec=10
-""" > /etc/systemd/system/nanodlp.service
+""" > /etc/systemd/system/klipper.service
