@@ -39,7 +39,7 @@ setup_openocd_service() {
     mkdir -p ${INSTALL_DIR}/printer_data/scripts
     cp ${SOURCE_DIR}/scripts/openocd_board_reset.sh ${INSTALL_DIR}/printer_data/scripts
 
-    ${SOURCE_DIR}/systemd/generate_reset_service.sh ${INSTALL_DIR}
+    sudo ${SOURCE_DIR}/systemd/generate_reset_service.sh ${INSTALL_DIR}
     sudo systemctl daemon-reload
     sudo systemctl enable board_reset.service
     sudo systemctl start board_reset.service
@@ -53,6 +53,9 @@ stop_running_services() {
         sudo systemctl stop nanodlp.service
     fi
 }
+
+echo "Running apt update..."
+sudo apt update
 
 echo "Ensuring git is up to date..."
 sudo apt install git -y
