@@ -83,7 +83,7 @@ echo "Setting up Klipper service (may require SUDO)..."
 if [ ! -f "/etc/systemd/system/klipper.service" ] ; then
     setup_klipper_service
 else
-    echo "NanoDLP service file detected. Do you wish to overrite it?"
+    echo "Klipper service file detected. Do you wish to overrite it?"
     select yn in "Yes" "No"; do
         case $yn in
             Yes ) setup_klipper_service; break;;
