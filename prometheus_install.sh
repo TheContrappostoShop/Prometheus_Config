@@ -63,10 +63,11 @@ stop_running_services
 echo "Installing/Updating Klipper..."
 if [ ! -d "${INSTALL_DIR}/klipper" ] ; then
     git clone https://github.com/TheContrappostoShop/klipper.git ${INSTALL_DIR}/klipper
-    ${SOURCE_DIR}/scripts/klipper_setup.sh ${INSTALL_DIR}
 else
     git -C "${INSTALL_DIR}/klipper" pull
 fi
+echo "Updating Klippy Environment..."
+${SOURCE_DIR}/scripts/klipper_setup.sh ${INSTALL_DIR}
 
 
 echo "Copying configuration files..."
