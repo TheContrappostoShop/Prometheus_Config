@@ -5,7 +5,7 @@ Description=Force the RP2040 to reset its usb connection
 Before=klipper.service
 
 [Service]
-ExecStart=$1/printer_data/scripts/openocd_reset.sh
+ExecStart=$1/printer_data/scripts/openocd_board_reset.sh
 RemainAfterExit=true
 Type=oneshot
 
