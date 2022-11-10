@@ -15,14 +15,12 @@ copy_klipper_config () {
     cp -r ${SOURCE_DIR}/klipper_config/* ${INSTALL_DIR}/printer_data/config
 }
 
+#ping http://localhost/printer/distro/generic to set distro??
 copy_nanodlp_config () {
     cp -r ${SOURCE_DIR}/nanodlp_db/* ${INSTALL_DIR}/nanodlp/db
 }
 
 setup_klipper_service () {
-    if [systemctl is-active --quiet klipper.service] ; then
-        sudo systemctl stop klipper.service
-    fi
     sudo ${SOURCE_DIR}/systemd/generate_klipper_env.sh ${INSTALL_DIR}
     sudo ${SOURCE_DIR}/systemd/generate_klipper_service.sh ${INSTALL_DIR}
     sudo systemctl daemon-reload
@@ -30,9 +28,6 @@ setup_klipper_service () {
 }
 
 setup_nanodlp_service () {
-    if [systemctl is-active --quiet nanodlp.service] ; then
-        sudo systemctl stop nanodlp.service
-    fi
     sudo ${SOURCE_DIR}/systemd/generate_nanodlp_service.sh ${INSTALL_DIR}
     sudo systemctl daemon-reload
     sudo systemctl enable nanodlp.service
@@ -50,12 +45,22 @@ setup_openocd_service() {
     sudo systemctl daemon-reload
     sudo systemctl enable board_reset.service
     sudo systemctl start board_reset.service
-    
+}
+
+stop_running_services() {
+    if [systemctl is-active --quiet klipper.service] ; then
+        sudo systemctl stop klipper.service
+    fi
+    if [systemctl is-active --quiet nanodlp.service] ; then
+        sudo systemctl stop nanodlp.service
+    fi
 }
 
 echo "Ensuring git is up to date..."
 sudo apt install git -y
 
+echo "Stopping any running NanoDLP or Klipper instances..."
+stop_running_services
 
 echo "Installing/Updating Klipper..."
 if [ ! -d "${INSTALL_DIR}/klipper" ] ; then
