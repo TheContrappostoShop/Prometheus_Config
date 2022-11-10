@@ -15,11 +15,14 @@ copy_klipper_config () {
     cp -r ${SOURCE_DIR}/klipper_config/* ${INSTALL_DIR}/printer_data/config
 }
 
-#ping http://localhost/printer/distro/generic to set distro??
 copy_nanodlp_config () {
+    # Set distro in the web ui, because you can't do it any other way.
+    # Has to be done after service already up, and must be rebooted
+    wget http://localhost/printer/distro/generic &>/dev/null
+    sleep 1
     cp -r ${SOURCE_DIR}/nanodlp_db/* ${INSTALL_DIR}/nanodlp/db
-    cp -r ${SOURCE_DIR}/nanodlp_public/* ${INSTALL_DIR}/nanodlp/public
-    sudo echo "generic" > ${INSTALL_DIR}/nanodlp/build
+    
+    sudo systemctl restart nanodlp.service
 }
 
 setup_klipper_service () {
@@ -111,19 +114,6 @@ else
     done
 fi
 
-echo "Configuring NanoDLP..."
-if [ ! "$(ls -A ${INSTALL_DIR}/nanodlp/db)" ]; then
-    copy_nanodlp_config
-else
-    echo "NanoDLP configuration files detected. Do you wish to overrite them?"
-    select yn in "Yes" "No"; do
-        case $yn in
-            Yes ) copy_nanodlp_config; break;;
-            No ) break;;
-        esac
-    done
-fi
-
 echo "Setting up NanoDLP service (may require SUDO)..."
 if [ ! -f "/etc/systemd/system/nanodlp.service" ] ; then
     setup_nanodlp_service
@@ -147,3 +137,16 @@ done
 
 sudo systemctl start klipper.service
 sudo systemctl start nanodlp.service
+
+echo "Configuring NanoDLP..."
+if [ ! "$(ls -A ${INSTALL_DIR}/nanodlp/db)" ]; then
+    copy_nanodlp_config
+else
+    echo "NanoDLP configuration files detected. Do you wish to overrite them?"
+    select yn in "Yes" "No"; do
+        case $yn in
+            Yes ) copy_nanodlp_config; break;;
+            No ) break;;
+        esac
+    done
+fi
