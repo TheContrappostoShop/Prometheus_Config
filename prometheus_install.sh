@@ -16,6 +16,9 @@ copy_klipper_config () {
 }
 
 setup_klipper_service () {
+    if [systemctl is-active --quiet klipper.service] ; then
+        sudo systemctl stop klipper.service
+    fi
     sudo ${SOURCE_DIR}/systemd/generate_klipper_env.sh ${INSTALL_DIR}
     sudo ${SOURCE_DIR}/systemd/generate_klipper_service.sh ${INSTALL_DIR}
     sudo systemctl daemon-reload
@@ -23,12 +26,18 @@ setup_klipper_service () {
 }
 
 setup_nanodlp_service () {
+    if [systemctl is-active --quiet nanodlp.service] ; then
+        sudo systemctl stop nanodlp.service
+    fi
     sudo ${SOURCE_DIR}/systemd/generate_nanodlp_service.sh ${INSTALL_DIR}
     sudo systemctl daemon-reload
     sudo systemctl enable nanodlp.service
 }
 
 setup_openocd_service() {
+    if [systemctl is-active --quiet board_reset.service] ; then
+        sudo systemctl stop board_reset.service
+    fi
     sudo ${SOURCE_DIR}/scripts/openocd_setup.sh ${INSTALL_DIR}
     mkdir -p ${INSTALL_DIR}/printer_data/scripts
     cp ${SOURCE_DIR}/scripts/openocd_board_reset.sh ${INSTALL_DIR}/printer_data/scripts
