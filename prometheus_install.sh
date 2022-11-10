@@ -15,6 +15,11 @@ copy_klipper_config () {
     cp -r ${SOURCE_DIR}/klipper_config/* ${INSTALL_DIR}/printer_data/config
 }
 
+copy_nanodlp_config () {
+    cp -r ${SOURCE_DIR}/nanodlp_db/* ${INSTALL_DIR}/nanodlp/db
+    echo "generic" > ${INSTALL_DIR}/nanodlp/build
+}
+
 setup_klipper_service () {
     if [systemctl is-active --quiet klipper.service] ; then
         sudo systemctl stop klipper.service
@@ -102,12 +107,12 @@ fi
 
 echo "Configuring NanoDLP..."
 if [ ! "$(ls -A ${INSTALL_DIR}/nanodlp/db)" ]; then
-    cp -r ${SOURCE_DIR}/nanodlp_db/* ${INSTALL_DIR}/nanodlp/db
+    copy_nanodlp_config
 else
     echo "NanoDLP configuration files detected. Do you wish to overrite them?"
     select yn in "Yes" "No"; do
         case $yn in
-            Yes ) cp -r ${SOURCE_DIR}/nanodlp_db/* ${INSTALL_DIR}/nanodlp/db; break;;
+            Yes ) copy_nanodlp_config; break;;
             No ) break;;
         esac
     done
