@@ -11,7 +11,6 @@ WantedBy=multi-user.target
 
 [Service]
 Type=simple
-User=ragwa
 RemainAfterExit=yes
 WorkingDirectory=$1/klipper
 EnvironmentFile=$1/printer_data/systemd/klipper.env
