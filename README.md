@@ -1,44 +1,56 @@
 # Prometheus Config
 This repository contains all of the configuration files needed to run Klipper 
-and NanoDLP together on the Prometheus MSLA printer, as well as a companion 
-installation script to get everything set up.
+and NanoDLP together on the Prometheus MSLA printer.
 
-> :warning: **These files, and the included installation script, are a work in 
-progress. Exercise caution when using them for the first time.**
+> :warning: **These files are a work in progress. Exercise caution when using 
+them for the first time.**
 
-## Instructions
+## Easy Install
 
-### Scripted Install
+For a fully configured Raspberry Pi Installation, see the PrometheusOS image 
+available here: https://github.com/TheContrappostoShop/PrometheusOS
 
-Ensure you have git installed on your desired host machine, and execute the
-following commands to utilize our installation script:
+## Scripted Install
+
+## Manual Install
+
+If you do not wish to use the custom RPi image, you can set up 
+[Klipper](https://www.klipper3d.org/) and [NanoDLP](https://www.nanodlp.com/)
+yourself, and copy these configuration files to your machine manually. See below
+for a description of the included files and their proper destinations.
+
+> Note: for best results, only use these config files with the 
+[Contrapposto Klipper Fork](https://github.com/TheContrappostoShop/klipper)
+
+### File Tree
+```markdown
+├── klipper
+│   ├── .config
+│   └── config
+│       ├── fdm_module.cfg
+│       ├── mainsail.cfg
+│       └── printer.cfg
+└── nanodlp
+    ├── machine.json
+    ├── profiles.json
+    └── resins.csv
 ```
-cd ~
-git clone https://github.com/TheContrappostoShop/Prometheus_Config.git
-./Prometheus_Config/prometheus_install.sh
-```
 
-This script will install NanoDLP as well Klipper and all of its configuration 
-files. 
+#### klipper/.config
+This is the klipper make configuration file for the Prometheus board firmware, 
+in the event that you need to recompile it yourself and reflash your board. It 
+should be placed in the root of your klipper directory.
 
-To install the NanoDLP configuration, you will need to import it from 
-within NanoDLP. 
+#### klipper/config/
+This directory holds the klipper cfg files for the Prometheus board, and the
+optional FDM expansion module.
+They should be placed in your klipper config directory (usually either `~`, or `~/printer_data/config`).
 
-First, go to the NanoDLP web UI, and select the "NanoDLP" distribution, to finish
-setup--it should be the first option presented. After you select it, NanoDLP will
-restart, and you will need to refresh the page.
+#### nanodlp/
+This directory holds the NanoDLP configuration files for the Prometheus MSLA--
+both the machine configuration, a generic printing profile, and the default 
+resin list. These should be placed in the NanoDLP db directory (usually either 
+`~/nanodlp/db` or `~/printer/db` depending on your install).
 
-Then, go to System->Tools->Import Machine Settings, and paste the following link
-into the "Download Machine Settings" field:
-```
-https://raw.githubusercontent.com/TheContrappostoShop/Prometheus_Config/main/nanodlp_db/machine.json
-```
-This will import the Prometheus machine settings, and your device will be ready
-to go.
-
-### Manual Install
-
-If you do not wish you use the supplied script, you may simply clone the 
-repository, and copy the files to their destinations manually. See below for a 
-detailed listing of the included files and their proper destinations (Coming 
-soon!).
+They can also be installed via the `System->Tools->Import Machine Settings` menu
+in the NanoDLP web interface. 
