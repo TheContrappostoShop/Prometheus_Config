@@ -1,14 +1,17 @@
-# Prometheus Config
+# Prometheus Config [![Discord Link](https://discordapp.com/api/guilds/881628699500359731/widget.png?style=shield)](https://discord.gg/GFUn9gwRsj)
 This repository contains all of the configuration files needed to run Klipper 
-and NanoDLP together on the Prometheus MSLA printer.
+and NanoDLP together on the
+[Prometheus MSLA](https://github.com/TheContrappostoShop/Prometheus-MSLA) Open
+Source Resin 3D Printer.
 
 > :warning: **These files are a work in progress. Exercise caution when using 
 them for the first time.**
 
 ## Easy Install
 
-For a fully configured Raspberry Pi Installation, see the PrometheusOS image 
-available here: https://github.com/TheContrappostoShop/PrometheusOS
+For a fully configured Raspberry Pi Installation, see the
+[PrometheusOS](https://github.com/TheContrappostoShop/PrometheusOS) custom RPi
+image.
 
 ## Scripted Install
 
@@ -44,7 +47,8 @@ should be placed in the root of your klipper directory.
 #### klipper/config/
 This directory holds the klipper cfg files for the Prometheus board, and the
 optional FDM expansion module.
-They should be placed in your klipper config directory (usually either `~`, or `~/printer_data/config`).
+They should be placed in your klipper config directory (usually either `~`, or
+`~/printer_data/config`).
 
 #### nanodlp/
 This directory holds the NanoDLP configuration files for the Prometheus MSLA--
