@@ -13,8 +13,6 @@ For a fully configured Raspberry Pi Installation, see the
 [PrometheusOS](https://github.com/TheContrappostoShop/PrometheusOS) custom RPi
 image.
 
-## Scripted Install
-
 ## Manual Install
 
 If you do not wish to use the custom RPi image, you can set up 
@@ -33,10 +31,12 @@ for a description of the included files and their proper destinations.
 │       ├── fdm_module.cfg
 │       ├── mainsail.cfg
 │       └── printer.cfg
-└── nanodlp
-    ├── machine.json
-    ├── profiles.json
-    └── resins.csv
+├── nanodlp
+│   ├── machine.json
+│   ├── profiles.json
+│   └── resins.csv
+└── rpi
+    └── config.txt
 ```
 
 #### klipper/.config
@@ -58,3 +58,10 @@ resin list. These should be placed in the NanoDLP db directory (usually either
 
 They can also be installed via the `System->Tools->Import Machine Settings` menu
 in the NanoDLP web interface. 
+
+#### rpi/config.txt
+This is the raspberry pi config file, ppre-configured for the hardware listed on
+the Prometheus-MSLA BOM. It should be placed in the `boot` partition of your
+Raspberry Pi storage device, commonly accessible as `/boot`. For more
+information about this file, see the offical RPi documentation
+[here](https://www.raspberrypi.com/documentation/computers/config_txt.html#what-is-config-txt).
