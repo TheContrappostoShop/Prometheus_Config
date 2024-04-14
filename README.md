@@ -29,12 +29,14 @@ for a description of the included files and their proper destinations.
 │   ├── .config
 │   └── config
 │       ├── fdm_module.cfg
-│       ├── mainsail.cfg
+│       ├── odyssey.cfg
 │       └── printer.cfg
 ├── nanodlp
 │   ├── machine.json
 │   ├── profiles.json
 │   └── resins.csv
+├── odyssey
+│   └── odyssey.yaml
 └── rpi
     └── config.txt
 ```
@@ -46,7 +48,8 @@ should be placed in the root of your klipper directory.
 
 #### klipper/config/
 This directory holds the klipper cfg files for the Prometheus board, and the
-optional FDM expansion module.
+optional FDM expansion module. Also includes the cfg file for interfacing between
+Odyssey and Mainsail.
 They should be placed in your klipper config directory (usually either `~`, or
 `~/printer_data/config`).
 
@@ -58,6 +61,11 @@ resin list. These should be placed in the NanoDLP db directory (usually either
 
 They can also be installed via the `System->Tools->Import Machine Settings` menu
 in the NanoDLP web interface. 
+
+#### odyssey/
+This directory holds the yaml configuration file for Odyssey.
+It should be placed in your config directory, alongside the Klipper cfg files
+(usually either `~`, or `~/printer_data/config`).
 
 #### rpi/config.txt
 This is the raspberry pi config file, ppre-configured for the hardware listed on
