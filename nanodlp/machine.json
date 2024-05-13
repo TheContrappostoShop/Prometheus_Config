@@ -21,7 +21,7 @@
 	"FaultPinState": 1,
 	"ShutterPin": 0,
 	"ShutterType": 0,
-	"ShutterMode": 1,
+	"ShutterMode": 2,
 	"ShutterOpen": 500,
 	"ShutterClose": 2500,
 	"ShutterOpenGcode": "UVLED_ON",
