@@ -69,7 +69,7 @@
 		"SeparationDetection": "",
 		"ResinLevelDetection": "",
 		"CrashDetection": "",
-		"DynamicWait": "",
+		"DynamicWait": "0",
 		"SlowSectionHeight": 7,
 		"SlowSectionStepWait": 40,
 		"JumpPerLayer": 0,
