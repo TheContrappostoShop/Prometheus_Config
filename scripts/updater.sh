@@ -32,6 +32,32 @@ is_user_root ()
  }
 
 
+get_latest_release() {
+  curl --silent "https://api.github.com/repos/$1/releases/latest" | # Get latest release from GitHub api
+    grep '"tag_name":' |                                            # Get tag line
+    sed -E 's/.*"([^"]+)".*/\1/'                                    # Pluck JSON value
+}
+
+get_github_releases() {
+    curl --silent "https://api.github.com/repos/$1/releases" | 
+        grep '"tag_name":' | 
+        sed -E 's/.*"([^"]+)".*/\1/'
+}
+
+get_github_releases_from_component() {
+    COMPONENT="$1"
+    
+    case "$COMPONENT" in
+    "odyssey")
+        echo "$(get_github_releases "TheContrappostoShop/Odyssey")" ;;
+    "orion")
+        echo "$(get_github_releases "TheContrappostoShop/Orion")" ;;
+    *)
+        echo "Invalid component, cannot list releases" >&2
+        exit 1 ;;
+    esac
+}
+
 update_odyssey() {
     RELEASE="$1"
 
@@ -86,6 +112,11 @@ if [[ -z "$2" ]]; then
     RELEASE="latest"
 else
     RELEASE="$2"
+fi
+
+if [[ "$RELEASE" == "-l" || "$RELEASE" == "--list" ]]; then
+    get_github_releases_from_component $COMPONENT
+    exit 0
 fi
 
 if [[ -z "$COMPONENT" ]]; then
